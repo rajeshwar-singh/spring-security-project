@@ -17,3 +17,6 @@ server:
   servlet:
     context-path: /api/v1
 
+#jwt secret key
+jwt:
+  secretKey : asdjfnihiuehh8dcuiy87yegdygeyd874dgeg67erufggefg64tfgeikdtegwfbegddtg4r3i2yeyhdue7g3gfbu3gd7d

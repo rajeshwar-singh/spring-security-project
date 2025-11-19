@@ -2,8 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="Hospital.Hospital.main" target="17" />
-      <module name="Hospital.Hospital.test" target="17" />
+      <module name="Hospital.Hospital.main~1" target="17" />
+      <module name="Hospital.Hospital.test~1" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

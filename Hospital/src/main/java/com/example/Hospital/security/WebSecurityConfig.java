@@ -1,9 +1,12 @@
-package com.example.Hospital.config;
+package com.example.Hospital.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,18 +26,25 @@ public class WebSecurityConfig {
     }
 
     @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)throws Exception{
+        return configuration.getAuthenticationManager();
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception
     {
-        httpSecurity.authorizeHttpRequests(auth->auth
-                        .requestMatchers("/hopital/**").permitAll()
+        httpSecurity.csrf(csrfConfig->csrfConfig.disable()) // disable csrf
+                .sessionManagement(sessionConfig->sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //disable session management
+                        .authorizeHttpRequests(auth->auth
+                        .requestMatchers("/hopital/**","/auth/**").permitAll()
                         .requestMatchers("/doctor/**").hasRole("USER")
-                        .requestMatchers("/patient/**").hasAnyRole("ADMIN","USER"))
-        .formLogin(Customizer.withDefaults());
+                        .requestMatchers("/patient/**").hasAnyRole("ADMIN","USER"));
+        //.formLogin(Customizer.withDefaults()); disable form
         return httpSecurity.build();
     }
 
     //for role based authorization we will use in memory user detail manager
-    @Bean
+    //@Bean  commenting this bean because we will use entity to retrive user details
     UserDetailsService userDetailsService()
     {
         UserDetails user1 = User.withUsername("rajeshwar")
