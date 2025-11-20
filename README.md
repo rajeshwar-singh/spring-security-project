@@ -16,7 +16,6 @@ JPA to interact with a MySQL database.
     -   Prerequisites
     -   Running Locally
 -   Security Architecture
--   API Endpoints
 -   Project Structure
 -   Future Improvements
 -   Contributing
@@ -88,17 +87,6 @@ Here’s a high-level overview of how JWT-based security is implemented:
 3.  Token Generation
     -   Using Keys utility from jjwt
     -   Tokens signed using HS256
-
-------------------------------------------------------------------------
-
-📚 API Endpoints (Examples)
-
-  Endpoint             Method   Description
-  -------------------- -------- ------------------------
-  /api/auth/register   POST     Register a new user
-  /api/auth/login      POST     Login & get JWT
-  /api/doctor          POST     Add a doctor (secured)
-  /api/doctor/{id}     GET      Get doctor by ID
 
 ------------------------------------------------------------------------
 
