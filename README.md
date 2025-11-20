@@ -65,4 +65,7 @@ This project is a Spring Boot application that demonstrates the implementation o
    ```bash
    ./gradlew bootRun
 
-###The application should start on http://localhost:8080.
+The application should start on http://localhost:8080.
+---
+
+##Security Architecture
