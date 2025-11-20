@@ -56,3 +56,13 @@ This project is a Spring Boot application that demonstrates the implementation o
    ```bash
    git clone https://github.com/rajeshwar-singh/spring-security-project.git
    cd spring-security-project
+
+2. Configure the database:
+   - Create a MySQL database (e.g., hospital_db)
+   - Update application.properties / application.yml with your database credentials
+
+3. Build and run:
+   ```bash
+   ./gradlew bootRun
+
+###The application should start on http://localhost:8080.
