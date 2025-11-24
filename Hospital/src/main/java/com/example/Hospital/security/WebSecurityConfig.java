@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -20,9 +21,11 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
     private final PasswordEncoder passwordEncoder;
-    public WebSecurityConfig(PasswordEncoder passwordEncoder)
+    private final JwtAuthFilter jwtAuthFilter;
+    public WebSecurityConfig(PasswordEncoder passwordEncoder, JwtAuthFilter jwtAuthFilter)
     {
         this.passwordEncoder = passwordEncoder;
+        this.jwtAuthFilter = jwtAuthFilter;
     }
 
     @Bean
@@ -37,8 +40,10 @@ public class WebSecurityConfig {
                 .sessionManagement(sessionConfig->sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //disable session management
                         .authorizeHttpRequests(auth->auth
                         .requestMatchers("/hopital/**","/auth/**").permitAll()
-                        .requestMatchers("/doctor/**").hasRole("USER")
-                        .requestMatchers("/patient/**").hasAnyRole("ADMIN","USER"));
+//                        .requestMatchers("/doctor/**").hasRole("USER")
+//                        .requestMatchers("/patient/**").hasAnyRole("ADMIN","USER"))
+                                .anyRequest().authenticated())
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         //.formLogin(Customizer.withDefaults()); disable form
         return httpSecurity.build();
     }

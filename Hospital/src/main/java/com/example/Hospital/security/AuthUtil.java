@@ -1,6 +1,7 @@
 package com.example.Hospital.security;
 
 import com.example.Hospital.entity.UserEntity;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -31,5 +32,11 @@ public class AuthUtil {
                 .setExpiration(new Date(System.currentTimeMillis() + 1000*60*10))
                 .signWith(getSecretKey())
                 .compact();
+    }
+
+    public String getUsernameFromToken(String token)
+    {
+       Claims claim = (Claims) Jwts.parserBuilder().setSigningKey(getSecretKey()).build().parseClaimsJws(token).getBody();
+       return claim.getSubject();
     }
 }
